@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>RSP-Multiplayer</title>
+<link href="Assets/css/reset.css" rel="stylesheet" type="text/css">
+<link href="Assets/css/style.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Limelight|PT+Mono" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="assets/js/game.js"></script>
+</head>
+
+<body>
+	
+	<div class="title">Rock-Paper-Scissors</div>
+	<div id="player-name">
+		<form id="get-name">
+            <input type="text" id="player-input" value="name">
+        	<input id="add-player" type="submit" value="Start">
+    	</form>
+	</div>
+	<div id="turn-order">Your turn!</div>
+	
+	<div class="row">
+		<div class="player-one">
+			<p>Steward</p>
+			<div class="select">
+				<button class="rock">Rock</button>
+				<button class="paper">Paper</button>
+				<button class="scissors">Scissors</button>
+			</div>
+			<p class="wins">Wins:</p>
+			<p class="losses">Losses:</p>
+		</div>
+		<div class="winner">
+			Player 1 wins!
+		</div>
+		<div class="player-two">
+			<p>Bill</p>
+			<div class="select">
+				<button class="rock">Rock</button>
+				<button class="paper">Paper</button>
+				<button class="scissors">Scissors</button>
+			</div>
+			<p class="wins">Wins:</p>
+			<p class="losses">Losses:</p>
+		</div>
+	</div>
+	
+    <div id="chat">
+	    <h2>Chat</h2>
+        <p id="name-area"></p>
+        <div id="chat-wrap">
+        	<div id="chat-area"></div>
+        </div>
+        <form id="send-message-area">
+        	<p>Your message: </p>
+        	<textarea id="sendie" maxlength = "100"></textarea>
+    	</form>
+	</div>
+
+</body>
+</html>

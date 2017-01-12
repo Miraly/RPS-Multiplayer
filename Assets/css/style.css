@@ -1,0 +1,121 @@
+body {
+	font-family: 'PT Mono', monospace;
+	font-size: 16px;
+	background-image: url(../images/bg.png);
+	background-repeat: no-repeat;
+}
+
+.title {
+	font-family: 'Limelight', cursive;
+	font-size: 50px;
+	text-align: center;
+	margin: 30px;
+}
+
+#player-name {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+input  {
+	border: 1px solid #ccc;
+    box-sizing: border-box;
+	border-radius: 5px;
+}
+
+#player-input {
+	box-sizing: border-box;
+	width: 300px;
+	height: 30px;
+	padding: 10px;
+	color: #B8B8B8;
+	font-size: 20px;
+	font-family: 'PT Mono', monospace;
+}
+
+#add-player {
+	background-color: #152678;
+	font-size: 20px;
+	width: 150px;
+	height: 35px;
+	padding: auto;
+	color: #FFFFFF;
+	font-family: 'PT Mono', monospace;
+}
+
+@keyframes flash {
+    0%   {color: red;}
+    33%  {color: #152678;}
+    33%  {color: red;}
+    100%  {color: #152678;}
+}
+
+#turn-order {
+	text-align: center;
+	margin: 20px;
+	color: #152678;
+	font-size: 24px;
+	animation-name: flash;
+	animation-duration: 1s;
+	animation-iteration-count: 10;
+}
+
+.row {
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.player-one {
+	box-sizing: border-box;
+	float: left;
+	width: 30%;
+	margin-right: 5%;
+	background-color: #152678;
+	padding: 15px;
+	border-radius: 5px;
+	color: #FFFFFF;
+} 
+
+.winner {
+	float: left;
+	width: 30%;
+	background-color: #152678;
+	box-sizing: border-box;
+	border-radius: 5px;
+	color: #FFFFFF;
+	padding: 15px;
+}
+
+.player-two {
+	float: left;
+	width: 30%;
+	margin-left: 5%;
+	background-color: #152678;
+	box-sizing: border-box;
+	border-radius: 5px;
+	color: #FFFFFF;
+	padding: 15px;
+}
+
+#chat {
+	clear: both;
+}
+
+p {
+	margin: 10px;
+}
+
+button {
+	margin: 1%;
+	border: 1px solid #ccc;
+    box-sizing: border-box;
+	border-radius: 1px;
+	width: 28%;
+	height: 30px;
+	padding: auto;
+	color:  #152678;
+	font-family: 'PT Mono', monospace;
+	font-size: 17px;
+}
+
