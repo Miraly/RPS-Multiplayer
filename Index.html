@@ -20,45 +20,33 @@
         	<input id="add-player" type="submit" value="Start">
     	</form>
 	</div>
+	
 	<div id="turn-order">Your turn!</div>
 	
 	<div class="row">
 		<div class="player-one">
-			<p>Steward</p>
+			<p id="current-player"></p>
 			<div class="select">
-				<button class="rock">Rock</button>
-				<button class="paper">Paper</button>
-				<button class="scissors">Scissors</button>
+				<button class="rps-button" id="rock">Rock</button>
+				<button class="rps-button" id="paper">Paper</button>
+				<button class="rps-button" id="scissors">Scissors</button>
 			</div>
-			<p class="wins">Wins:</p>
-			<p class="losses">Losses:</p>
+			<p class="wins"></p>
+			<p class="losses"></p>
 		</div>
 		<div class="winner">
 			Player 1 wins!
 		</div>
-		<div class="player-two">
-			<p>Bill</p>
-			<div class="select">
-				<button class="rock">Rock</button>
-				<button class="paper">Paper</button>
-				<button class="scissors">Scissors</button>
-			</div>
-			<p class="wins">Wins:</p>
-			<p class="losses">Losses:</p>
-		</div>
+		<div class="player-two">Bill</div>
 	</div>
-	
-    <div id="chat">
-	    <h2>Chat</h2>
-        <p id="name-area"></p>
-        <div id="chat-wrap">
-        	<div id="chat-area"></div>
-        </div>
-        <form id="send-message-area">
-        	<p>Your message: </p>
-        	<textarea id="sendie" maxlength = "100"></textarea>
-    	</form>
-	</div>
+	    	
+	<div id="chat">
+		<div class="form-chat">
+                <label for="form-chat">Chat</label><br>
+                <textarea class="form-control" id="send-message-area" rows="2"></textarea>
+    	</div>
+              <button id="send-msg" type="submit">Send</button>
+	</div>      
 
 </body>
 </html>
