@@ -18,8 +18,10 @@ var connectedRef = database.ref(".info/connected");
       // the client's connection state changes.
       // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
    
-// If they are connected..
-     if (snap.val()) {
+connectedRef.on("value", function(snap) {
+
+        // If they are connected..
+        if (snap.val()) {
 
           // Add user to the connections list.
           var con = connectionsRef.push(true);
@@ -37,6 +39,12 @@ $(document).ready(function(){
 		
 		var playerName = $("#player-input").val();
 		$("#player-name").html("Hi " + playerName);
+		
+		database.ref().push({
+			playerName: playerName,
+					
+		});
+				
 		$("#current-player").html(playerName);
 		$(".wins").html("Wins: " + winsCount);
 		$(".losses").html("Losses: " +lossesCount);
@@ -45,34 +53,34 @@ $(document).ready(function(){
 	
 	$(".rps-button").on("click", function(){
 		$(".select").html(this.id);
-		playerChoice = this.id
+		playerChoice = this.id;
 		// Add this value to Firebase
 	});
 
 	
 // This is a future logic to define the winner
 	
-//	if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
+//	if ((player1 === "r") || (player1 === "p") || (player1 === "s")) {
 //         
-//          if ((userGuess === "r") && (computerGuess === "s")) {
+//          if ((player1 === "r") && (player2 === "s")) {
 //            alert("You win!");
 //          }
-//          else if ((userGuess === "r") && (computerGuess === "p")) {
+//          else if ((player1 === "r") && (player2 === "p")) {
 //            alert("You lose!");
 //          }
-//          else if ((userGuess === "s") && (computerGuess === "r")) {
+//          else if ((player1 === "s") && (player2 === "r")) {
 //             alert("You lose!");
 //          }
-//          else if ((userGuess === "s") && (computerGuess === "p")) {
+//          else if ((player1 === "s") && (player2 === "p")) {
 //            alert("You win!");
 //          }
-//          else if ((userGuess === "p") && (computerGuess === "r")) {
+//          else if ((player1 === "p") && (player2 === "r")) {
 //            wins++;
 //          }
-//          else if ((userGuess === "p") && (computerGuess === "s")) {
+//          else if ((uplayer1 === "p") && (player2 === "s")) {
 //             alert("You lose!");
 //          }
-//          else if (userGuess === computerGuess) {
+//          else if (player1 === player2) {
 //            alert("It's tie!");
 //          }
 //	}
