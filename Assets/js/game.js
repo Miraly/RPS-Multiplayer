@@ -11,6 +11,8 @@ var database = firebase.database();
 var winsCount = 0;
 var lossesCount = 0;
 var playerChoice;
+var playersCount;
+
 
 var connectionsRef = database.ref("/players"); //adding a watcher for connections to firebase
 var connectedRef = database.ref(".info/connected"); 
@@ -19,43 +21,65 @@ var connectedRef = database.ref(".info/connected");
       // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
    
 connectedRef.on("value", function(snap) {
-
         // If they are connected..
         if (snap.val()) {
+          var con = connectionsRef.push(true); // Add user to the connections list.
+		  con.onDisconnect().remove();  // Remove user from the connection list when they disconnect.
+		 }
+});
 
-          // Add user to the connections list.
-          var con = connectionsRef.push(true);
-
-          // Remove user from the connection list when they disconnect.
-          con.onDisconnect().remove();
-        }
-      });
-
+connectionsRef.on("value", function(snap) {
+        // Display the viewer count in the html.
+        // The number of online users is the number of children in the connections list.
+		playersCount = snap.numChildren();
+        console.log(playersCount);
+});
 
 $(document).ready(function(){
+	
 	$("#add-player").on("click", function(event) {
-        
+//        if (playersCount === 2) {
+//		$("#player-name").html("Sorry, no more spots, come back later!");
+//		} else {
         event.preventDefault();
 		
 		var playerName = $("#player-input").val();
+		playerChoice = "none";
+	
 		$("#player-name").html("Hi " + playerName);
 		
-		database.ref().push({
+		database.ref("playersInfo").push({
 			playerName: playerName,
-					
+			pick: playerChoice,
+			wins: winsCount,
+			losses: lossesCount
 		});
-				
+		
+//		 var users = database.ref("players");
+//
+//		// Code for the set
+//		users.child('playerName').set({
+//		  playerName: playerName,
+//			pick: playerChoice,
+//			wins: winsCount,
+//			losses: lossesCount
+//		});
+
+		
 		$("#current-player").html(playerName);
 		$(".wins").html("Wins: " + winsCount);
-		$(".losses").html("Losses: " +lossesCount);
-
+		$(".losses").html("Losses: " + lossesCount);
+//		}
 	 });
 	
 	$(".rps-button").on("click", function(){
 		$(".select").html(this.id);
 		playerChoice = this.id;
+		console.log(this.id)
 		// Add this value to Firebase
 	});
+	
+	
 
 	
 // This is a future logic to define the winner
