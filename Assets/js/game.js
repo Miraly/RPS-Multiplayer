@@ -12,6 +12,8 @@ var winsCount = 0;
 var lossesCount = 0;
 var playerChoice;
 var playersCount;
+var playerName;
+
 
 
 var connectionsRef = database.ref("/players"); //adding a watcher for connections to firebase
@@ -37,47 +39,49 @@ connectionsRef.on("value", function(snap) {
 
 $(document).ready(function(){
 	
-	$("#add-player").on("click", function(event) {
-//        if (playersCount === 2) {
-//		$("#player-name").html("Sorry, no more spots, come back later!");
-//		} else {
-        event.preventDefault();
+		$("#add-player").on("click", function(event) {
+		console.log(playersCount);
+        if (playersCount > 2) {
+			$("#player-name").html("Sorry, no more spots, come back later!");
+			event.preventDefault();
+		} else {
+        	event.preventDefault();
 		
-		var playerName = $("#player-input").val();
-		playerChoice = "none";
+			playerName = $("#player-input").val();
+			playerChoice = "none";
 	
-		$("#player-name").html("Hi " + playerName);
+			$("#player-name").html("Hi " + playerName);
 		
-		database.ref("playersInfo").push({
-			playerName: playerName,
+		 var users = database.ref("players");
+
+		// Code for the set
+		users.child(playerName).set({
+		  playerName: playerName,
 			pick: playerChoice,
 			wins: winsCount,
 			losses: lossesCount
 		});
 		
-//		 var users = database.ref("players");
-//
-//		// Code for the set
-//		users.child('playerName').set({
-//		  playerName: playerName,
-//			pick: playerChoice,
-//			wins: winsCount,
-//			losses: lossesCount
-//		});
-
-		
-		$("#current-player").html(playerName);
-		$(".wins").html("Wins: " + winsCount);
-		$(".losses").html("Losses: " + lossesCount);
-//		}
+			$("#current-player").html(playerName);
+			$(".wins").html("Wins: " + winsCount);
+			$(".losses").html("Losses: " + lossesCount);
+		}
 	 });
 	
-	$(".rps-button").on("click", function(){
-		$(".select").html(this.id);
-		playerChoice = this.id;
-		console.log(this.id)
-		// Add this value to Firebase
-	});
+		$(".rps-button").on("click", function(){
+			$(".select").html(this.id);
+			playerChoice = this.id;
+			console.log(this.id);
+			// Add this value to Firebase
+
+			var playerRef = firebase.database().ref('players');
+			var childRef =  playerRef.child(playerName);
+			
+			
+			childRef.update({ pick: playerChoice});
+
+		});
+
 	
 	
 
