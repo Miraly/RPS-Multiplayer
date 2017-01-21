@@ -11,29 +11,34 @@ var database = firebase.database();
 var winsCount = 0;
 var lossesCount = 0;
 var playerChoice;
-var playersCount;
+var playersCount = 0;
+var opponent;
+var playerNum = 1;
+
 var playerName;
+var player1Pick;
+var player2Pick;
 
 
 
+var playerRef = firebase.database().ref('players');
 var connectionsRef = database.ref("/players"); //adding a watcher for connections to firebase
 var connectedRef = database.ref(".info/connected"); 
- // '.info/connected' is a special location provided by Firebase that is updated every time
-      // the client's connection state changes.
-      // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+ 
    
-connectedRef.on("value", function(snap) {
-        // If they are connected..
-        if (snap.val()) {
-          var con = connectionsRef.push(true); // Add user to the connections list.
-		  con.onDisconnect().remove();  // Remove user from the connection list when they disconnect.
-		 }
-});
+//connectedRef.on("value", function(snap) {
+//        // If they are connected..
+//        if (snap.val()) {
+//          var con = connectionsRef.push(true); // Add user to the connections list.
+//		  con.onDisconnect().remove();  // Remove user from the connection list when they disconnect.
+//		 }
+//});
 
 connectionsRef.on("value", function(snap) {
-        // Display the viewer count in the html.
+        
         // The number of online users is the number of children in the connections list.
 		playersCount = snap.numChildren();
+	console.log('playerCount', playersCount);
         console.log(playersCount);
 });
 
@@ -52,15 +57,16 @@ $(document).ready(function(){
 	
 			$("#player-name").html("Hi " + playerName);
 		
-		 var users = database.ref("players");
-
+		 	var users = database.ref("players");
+			
 		// Code for the set
-		users.child(playerName).set({
-		  playerName: playerName,
-			pick: playerChoice,
-			wins: winsCount,
-			losses: lossesCount
-		});
+			users.child(playerName).set({
+				playerNum: playerNum,
+			  	playerName: playerName,
+				pick: playerChoice,
+				wins: winsCount,
+				losses: lossesCount
+			});
 		
 			$("#current-player").html(playerName);
 			$(".wins").html("Wins: " + winsCount);
@@ -69,47 +75,86 @@ $(document).ready(function(){
 	 });
 	
 		$(".rps-button").on("click", function(){
+			console.log('in here');
 			$(".select").html(this.id);
 			playerChoice = this.id;
-			console.log(this.id);
+			
 			// Add this value to Firebase
 
-			var playerRef = firebase.database().ref('players');
-			var childRef =  playerRef.child(playerName);
 			
-			
-			childRef.update({ pick: playerChoice});
-
+					
+			var pickRef =  playerRef.child(playerNum);
+			pickRef.update({ pick: playerChoice});
 		});
 
 	
+			
+			playerRef.on("child_added", function(snapshot) {
+			  console.log(snapshot.key);
+				
+			  if (snapshot.val().playerName !== playerName) {
+				playerNum = 2;	
+								
+			  } else {
+				 opponent = snapshot.val();
+			 }
+			});
 	
+		
+//		function winner() {
+//			database.ref().on("value", function(snapshot) {
+//      
+//			player1Pick = snapshot.val().players.1.pick;
+//				console.log(player1Pick);
+//			player2Pick = snapshot.val().players.2.pick;
+//				console.log(player2Pick);
+//				
+////			if (snapshot.val().players.1.pick)
+//		
+//    		}, function(errorObject) {
+//      		console.log("The read failed: " + errorObject.code);
+//			});
+//			
+//				if ((player1Pick === "rock") || (player1Pick === "paper") || (player1Pick === "scissors")) {
+//
+//				  if ((player1Pick === "rock") && (player2Pick === "scissors")) {
+//					  if (playerChoice === player1Pick) {
+//						  $(".winner").html("You won"); 
+//					  } else {$(".winner").html("You lost"); } 
+//						
+//				  }
+//				  else if ((player1Pick === "rock") && (player2Pick === "paper")) {
+//					if (playerChoice === player2Pick) {
+//						  $(".winner").html("You won"); 
+//					  } else { $(".winner").html("You lost"); } 
+//				  }
+//				  else if ((player1Pick === "scissors") && (player2Pick === "rock")) {
+//					 if (playerChoice === player2Pick) {
+//						  $(".winner").html("You won"); 
+//					  } else {$(".winner").html("You lost"); } 
+//				  }
+//				  else if ((player1Pick === "scissors") && (player2Pick === "paper")) {
+//						if (playerChoice === player1Pick) {
+//							  $(".winner").html("You won"); 
+//						  } else {$(".winner").html("You lost"); } 
+//				  }
+//				  else if ((player1Pick === "paper") && (player2Pick === "rock")) {
+//						if (playerChoice === player2Pick) {
+//						  $(".winner").html("You won"); 
+//					  } else {$(".winner").html("You lost"); } 
+//				  }
+//				  else if ((player1Pick === "paper") && (player2Pick === "scissors")) {
+//					 	if (playerChoice === player2Pick) {
+//						  $(".winner").html("You won"); 
+//					  } else {$(".winner").html("You lost"); } 
+//				  }
+//				  else if (player1Pick === player2Pick) {
+//						$(".winner").html("It's tie");
+//				  }
+//			}
+//		}
+//	
+//	
+//	winner(); 
 
-	
-// This is a future logic to define the winner
-	
-//	if ((player1 === "r") || (player1 === "p") || (player1 === "s")) {
-//         
-//          if ((player1 === "r") && (player2 === "s")) {
-//            alert("You win!");
-//          }
-//          else if ((player1 === "r") && (player2 === "p")) {
-//            alert("You lose!");
-//          }
-//          else if ((player1 === "s") && (player2 === "r")) {
-//             alert("You lose!");
-//          }
-//          else if ((player1 === "s") && (player2 === "p")) {
-//            alert("You win!");
-//          }
-//          else if ((player1 === "p") && (player2 === "r")) {
-//            wins++;
-//          }
-//          else if ((uplayer1 === "p") && (player2 === "s")) {
-//             alert("You lose!");
-//          }
-//          else if (player1 === player2) {
-//            alert("It's tie!");
-//          }
-//	}
 });
